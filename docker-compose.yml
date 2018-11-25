@@ -3,7 +3,7 @@ version: '3'
 services:
   jupyterlab:
       build: .
-      #image:  jupyter:c303622
+      #image:  koinotice/jupyter:ad75164
 
       container_name: jupyter
       ports:

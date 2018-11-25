@@ -66,6 +66,6 @@ RUN touch /var/log/cron-stdout.log
 
 CMD env > /root/env && sed -i '/GPG_KEYS/d' /root/env && sed -i '/no_proxy/d' /root/env && sed -i -e 's/^/export /' /root/env && chmod +x /root/env && rsyslogd && cron && tail -F /var/log/syslog /var/log/cron-stdout.log
 
-ENTRYPOINT ["crond", "-f", "-d", "8"]
+ENTRYPOINT ["cron", "-f", "-d", "8"]
 #ENTRYPOINT [ "/usr/sbin/cront", "--" ]
 CMD [ "/bin/bash" ]
