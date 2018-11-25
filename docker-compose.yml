@@ -16,6 +16,8 @@ services:
 
       environment:
         - ACCESS_TOKEN=${ACCESS_TOKEN}
+        - NOTEBOOK_PASSWORD=${NOTEBOOK_PASSWORD}
+
       volumes:
         - "./data/jupyter:/data"
         - "./requirements.txt:/data/requirements.txt"
