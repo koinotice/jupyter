@@ -17,7 +17,9 @@ services:
       environment:
         - ACCESS_TOKEN=${ACCESS_TOKEN}
         - NOTEBOOK_PASSWORD=${NOTEBOOK_PASSWORD}
-
+        - NOTEBOOK_DIR=/
+        - NOTEBOOK_IP=*
+        - NOTEBOOK_PORT=8888
       volumes:
         - "./data/jupyter:/data"
         - "./requirements.txt:/data/requirements.txt"
