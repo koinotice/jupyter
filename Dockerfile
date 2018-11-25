@@ -1,7 +1,9 @@
 FROM continuumio/anaconda3
 
 WORKDIR /
+
 COPY docker-entrypoint.sh .
+COPY requirements.txt .
 RUN chmod +x docker-entrypoint.sh
 
 EXPOSE 8888
