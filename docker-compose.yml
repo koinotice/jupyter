@@ -1,0 +1,60 @@
+version: '3'
+
+services:
+  jupyterlab:
+      build: .
+      #image:  jupyter:c303622
+
+      container_name: jupyter
+      ports:
+        - "8888:8888"
+      links:
+        - postgres
+        - redis
+        #- mariadb
+
+      environment:
+        - ACCESS_TOKEN=${ACCESS_TOKEN}
+      volumes:
+        - "./data/jupyter:/data"
+        - "./requirements.txt:/data/requirements.txt"
+      command: /bin/bash -c " jupyter lab --NotebookApp.password=${ACCESS_TOKEN}   --ip='*' --port=8888 --no-browser --allow-root"
+      #command: /bin/bash -c " jupyter lab --NotebookApp.password=${ACCESS_TOKEN}   --ip='*' --port=8888 --no-browser --allow-root"
+
+
+#
+  mariadb:
+    image: mariadb
+    container_name: "${PROJECT_NAME}_mariadb"
+    stop_grace_period: 30s
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: $DB_ROOT_PASSWORD
+      MYSQL_DATABASE: $DB_NAME
+      MYSQL_USER: $DB_USER
+      MYSQL_PASSWORD: $DB_PASSWORD
+    volumes:
+    # NOTE: your data will be stored in ./mysql
+    - ./data/mysql:/var/lib/mysql
+
+  
+  redis:
+    #image: redis
+    image: wodby/redis:$REDIS_TAG
+    container_name: "${PROJECT_NAME}_redis"
+    environment:
+          - REDIS_PASSWORD=root
+    #command: redis-server --requirepass yourpassword
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./data/redis:/data 
+
+  postgres:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: data
+      POSTGRES_PASSWORD: data
+      POSTGRES_DB: data
