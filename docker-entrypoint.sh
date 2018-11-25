@@ -17,7 +17,7 @@ $CONDA_EXE install $CONDA_PACKAGES -y
 
 #pip --cache-dir /opt/pip_pkgs_cache
 echo install pip packages
-pip install $PIP_PACKAGES
+#pip install $PIP_PACKAGES
 
 
 echo "from notebook.auth import passwd

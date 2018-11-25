@@ -1,5 +1,5 @@
 NAMESPACE = koinotice
-IMAGE = jupyter
+IMAGE = notebook
 VERSION ?= latest
 TAG = v1.0
 CONTEXT = .
@@ -32,11 +32,11 @@ REGISTRY ?= koinotice
 ### Target to build the makisu docker images.
 .PHONY: image publish
 image:
-	docker build -t $(REGISTRY)/jupyter:$(PACKAGE_VERSION) -f Dockerfile .
-	docker tag $(REGISTRY)/jupyter:$(PACKAGE_VERSION) jupyter:$(PACKAGE_VERSION)
+	docker build -t $(REGISTRY)/notebook:$(PACKAGE_VERSION) -f Dockerfile .
+	docker tag $(REGISTRY)/notebook:$(PACKAGE_VERSION) jupyter:$(PACKAGE_VERSION)
 
 publish: image
-	docker push $(REGISTRY)/jupyter:$(PACKAGE_VERSION)
+	docker push $(REGISTRY)/notebook:$(PACKAGE_VERSION)
 
 
 build:
