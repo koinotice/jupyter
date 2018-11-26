@@ -17,7 +17,7 @@ services:
     image: koinotice/jupyter
     container_name: "${PROJECT_NAME}_jupyter"
     volumes:
-      - ./data/jupyter:/data/jupyter
+      - /koinotice/data/jupyter:/data/jupyter
     environment:
     - NOTEBOOK_PASSWORD=${NOTEBOOK_PASSWORD}
     - NOTEBOOK_DIR=/data/jupyter

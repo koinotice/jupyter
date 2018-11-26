@@ -12,7 +12,7 @@ EXPOSE 8888
 
 WORKDIR /data/jupyter
 
-COPY ./data/scripts /data/scripts/
+COPY ./scripts /data/scripts
 
 RUN chmod +x /data/scripts/*.sh
 

@@ -19,6 +19,9 @@
 #echo install pip packages
 ##pip install $PIP_PACKAGES
 
+apt-get install python3-mysql.connector -y
+pip install mysql-connector-python
+
 pip install runipy
 
 echo "from notebook.auth import passwd
