@@ -1,0 +1,49 @@
+echo "from notebook.auth import passwd
+from os import environ
+print(passwd(environ['NOTEBOOK_PASSWORD']))" > pwgen.py
+
+
+if [ ! -f /root/.jupyter/jupyter_notebook_config.py ]; then
+    /conda/bin/jupyter notebook --generate-config
+fi
+
+/conda/bin/jupyter notebook --notebook-dir=\'$NOTEBOOK_DIR\' --ip=\'$NOTEBOOK_IP\' --port=$NOTEBOOK_PORT --no-browser --allow-root --NotebookApp.password=\'$NOTEBOOK_PASSWORD_HASHED\'
+
+
+
+
+#  mariadb:
+#    image: mariadb
+#    container_name: "${PROJECT_NAME}_mariadb"
+#    stop_grace_period: 30s
+#    ports:
+#      - 3306:3306
+#    environment:
+#      MYSQL_ROOT_PASSWORD: $DB_ROOT_PASSWORD
+#      MYSQL_DATABASE: $DB_NAME
+#      MYSQL_USER: $DB_USER
+#      MYSQL_PASSWORD: $DB_PASSWORD
+#    volumes:
+#    # NOTE: your data will be stored in ./mysql
+#    - ./data/mysql:/var/lib/mysql
+#
+#
+#  redis:
+#    #image: redis
+#    image: wodby/redis:$REDIS_TAG
+#    container_name: "${PROJECT_NAME}_redis"
+#    environment:
+#          - REDIS_PASSWORD=root
+#    #command: redis-server --requirepass yourpassword
+#    ports:
+#      - "6379:6379"
+#    volumes:
+#      - ./data/redis:/data
+#
+#  postgres:
+#    image: postgres
+#    restart: always
+#    environment:
+#      POSTGRES_USER: data
+#      POSTGRES_PASSWORD: data
+#      POSTGRES_DB: data

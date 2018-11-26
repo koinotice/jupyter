@@ -1,65 +1,56 @@
-version: '3'
+version: '3.4'
 
 services:
-  jupyterlab:
-      build: .
-      #image:  koinotice/jupyter:ad75164
+  command:
+    build: ./test
+    container_name: "${PROJECT_NAME}_command"
+    volumes:
+      - ./test:/tests-dir
+    depends_on:
+      - jupyter
+    links:
+      - jupyter
+    command: bash /tests-dir/run-test.sh
 
-      container_name: jupyter
-      ports:
-        - "8888:8888"
-
-      #links:
-        #- postgres
-        #- redis
-        #- mariadb
-
-      environment:
-        - ACCESS_TOKEN=${ACCESS_TOKEN}
-        - NOTEBOOK_PASSWORD=${NOTEBOOK_PASSWORD}
-        - NOTEBOOK_DIR=/data/jupyter
-        - NOTEBOOK_IP=*
-        - NOTEBOOK_PORT=8888
-      volumes:
-        - "./data/jupyter:/data/jupyter"
-#        - "./requirements.txt:/data/requirements.txt"
-      #command: /bin/bash -c " jupyter lab --NotebookApp.password=${ACCESS_TOKEN}   --ip='*' --port=8888 --no-browser --allow-root"
-      #command: /bin/bash -c " jupyter lab --NotebookApp.password=${ACCESS_TOKEN}   --ip='*' --port=8888 --no-browser --allow-root"
+  jupyter:
+    build: .
+    image: koinotice/jupyter
+    container_name: "${PROJECT_NAME}_jupyter"
+    volumes:
+      - ./data/jupyter:/data/jupyter
+    environment:
+    - NOTEBOOK_PASSWORD=${NOTEBOOK_PASSWORD}
+    - NOTEBOOK_DIR=/data/jupyter
+    - NOTEBOOK_IP=0.0.0.0
+    - NOTEBOOK_PORT=8888
+    ports:
+      - 8888:8888
 
 
-#
-#  mariadb:
-#    image: mariadb
-#    container_name: "${PROJECT_NAME}_mariadb"
-#    stop_grace_period: 30s
-#    ports:
-#      - 3306:3306
-#    environment:
-#      MYSQL_ROOT_PASSWORD: $DB_ROOT_PASSWORD
-#      MYSQL_DATABASE: $DB_NAME
-#      MYSQL_USER: $DB_USER
-#      MYSQL_PASSWORD: $DB_PASSWORD
-#    volumes:
-#    # NOTE: your data will be stored in ./mysql
-#    - ./data/mysql:/var/lib/mysql
-#
+  mariadb:
+    image: mariadb
+    container_name: "${PROJECT_NAME}_mariadb"
+    stop_grace_period: 30s
+    ports:
+    - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: $DB_ROOT_PASSWORD
+      MYSQL_DATABASE: $DB_NAME
+      MYSQL_USER: $DB_USER
+      MYSQL_PASSWORD: $DB_PASSWORD
+    volumes:
+    # NOTE: your data will be stored in ./mysql
+    - ./data/mysql:/var/lib/mysql
+
 #
 #  redis:
 #    #image: redis
 #    image: wodby/redis:$REDIS_TAG
 #    container_name: "${PROJECT_NAME}_redis"
 #    environment:
-#          - REDIS_PASSWORD=root
+#    - REDIS_PASSWORD=root
 #    #command: redis-server --requirepass yourpassword
 #    ports:
-#      - "6379:6379"
+#    - "6379:6379"
 #    volumes:
-#      - ./data/redis:/data
-#
-#  postgres:
-#    image: postgres
-#    restart: always
-#    environment:
-#      POSTGRES_USER: data
-#      POSTGRES_PASSWORD: data
-#      POSTGRES_DB: data
+#    - ./data/redis:/data
