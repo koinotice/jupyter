@@ -19,7 +19,7 @@
 #echo install pip packages
 ##pip install $PIP_PACKAGES
 
-#pip install runipy
+pip install runipy
 
 echo "from notebook.auth import passwd
 from os import environ

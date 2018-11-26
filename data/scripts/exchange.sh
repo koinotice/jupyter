@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-runipy /data/0x.ipynb
+runipy /data/jupyter/pmker.ipynb
