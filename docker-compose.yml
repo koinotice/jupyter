@@ -8,7 +8,7 @@ services:
       container_name: jupyter
       ports:
         - "8888:8888"
-        - "7777:7777"
+
       #links:
         #- postgres
         #- redis
@@ -17,12 +17,12 @@ services:
       environment:
         - ACCESS_TOKEN=${ACCESS_TOKEN}
         - NOTEBOOK_PASSWORD=${NOTEBOOK_PASSWORD}
-        - NOTEBOOK_DIR=/
+        - NOTEBOOK_DIR=/data/jupyter
         - NOTEBOOK_IP=*
         - NOTEBOOK_PORT=8888
       volumes:
-        - "./data/jupyter:/data"
-        - "./requirements.txt:/data/requirements.txt"
+        - "./data/jupyter:/data/jupyter"
+#        - "./requirements.txt:/data/requirements.txt"
       #command: /bin/bash -c " jupyter lab --NotebookApp.password=${ACCESS_TOKEN}   --ip='*' --port=8888 --no-browser --allow-root"
       #command: /bin/bash -c " jupyter lab --NotebookApp.password=${ACCESS_TOKEN}   --ip='*' --port=8888 --no-browser --allow-root"
 

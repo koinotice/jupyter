@@ -1,13 +1,15 @@
 FROM continuumio/anaconda3
 
-WORKDIR /
+WORKDIR /data/jupyter
 
-COPY docker-entrypoint.sh .
-COPY requirements.txt .
-RUN chmod +x docker-entrypoint.sh
+COPY docker-entrypoint.sh /data/scripts/
+COPY requirements.txt /data/scripts/
+RUN chmod +x /data/scripts/docker-entrypoint.sh
 
 EXPOSE 8888
-EXPOSE 7777
+
+
 
 ENTRYPOINT [ "/usr/bin/tini", "--" ]
-CMD [ "/docker-entrypoint.sh" ]
+CMD [ "/data/scripts/docker-entrypoint.sh" ]
+
